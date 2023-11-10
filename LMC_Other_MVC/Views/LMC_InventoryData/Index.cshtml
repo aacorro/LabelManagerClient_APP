@@ -1,0 +1,78 @@
+﻿@model LMC_InventoryData_VM
+
+@{
+    ViewData["Title"] = "Inventory Data";
+}
+
+
+<div class="container mt-4">
+
+    <h2 class="text-center">Inventory Data</h2> 
+
+    <form method="get">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="startDate" class="form-label fst-italic">Start Date:</label>
+                <input type="date" class="form-control" name="startDate" id="startDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+            </div>
+            <div class="col-md-6">
+                <label for="endDate" class="form-label fst-italic">End Date:</label>
+                <input type="date" class="form-control" name="endDate" id="endDate" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-info mt-2">Apply date range</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Scale Name</th>
+                <th>Scale ID</th>
+                <th>Pallet No</th>
+                <th>Lot No</th>
+                <th>Pallet Count</th>
+                <th>Earliest Date</th>
+                <th>Last Inventory Sync</th>
+                <th>Esported</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.loInvDataExp.Count == 0)
+            {
+                <tr>
+                    <td colspan="7">No data available for the selected data range</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model.loInvDataExp)
+                {
+                    <tr>
+                        <td>@item.ScaleName</td>
+                        <td>@item.ScaleID</td>
+                        <td>@item.PalletNo</td>
+                        <td>@item.LotNo</td>
+                        <td>@item.PalletCount</td>
+                        <td>@item.EarliestDate.ToShortDateString()</td>
+                        <td>@item.LastInventorySync.ToShortDateString()</td>
+                        <td>
+                            @if (item.Exported.HasValue)
+                            {
+                                @(item.Exported.Value ? "Yes" : "No")
+                            }
+                            else
+                            {
+                                @("N/A")
+                            }
+                        </td>
+                    </tr>
+
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+

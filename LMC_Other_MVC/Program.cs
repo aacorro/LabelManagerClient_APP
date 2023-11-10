@@ -1,3 +1,7 @@
+using LMC_Other_InventoryData;
+using System.Data;
+using System.Data.SqlClient;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var configuration = new ConfigurationBuilder()
@@ -7,6 +11,10 @@ var configuration = new ConfigurationBuilder()
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IDbConnection>(sp => new SqlConnection(configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<LMC_InventoryData_Repo>();
 
 var app = builder.Build();
 
@@ -27,6 +35,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=LMC_InventoryData}/{action=Index}/{id?}");
 
 app.Run();
