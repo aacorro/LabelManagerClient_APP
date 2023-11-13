@@ -1,0 +1,238 @@
+﻿//database model class:
+namespace LMC_Other_InventoryData
+{
+    public class LMC_InvData_RecordDetail_Model
+    {
+        public string SerialNo { get; set; }
+        public string PalletNo { get; set; }
+        public string ProductNo { get; set; }
+        public string LotNo { get; set; }
+        public string SartoriLotNumber { get; set; }
+        public string StockNumber { get; set; }
+        public string MfgID { get; set; }
+        public DateTime ProductDate { get; set; }
+        public DateTime PackDate { get; set; }
+        public DateTime MakeDate { get; set; }
+        public decimal CaseWeight { get; set; }
+        public decimal TareWeight { get; set; }
+        public decimal AverageWeight { get; set; }
+        public int ShelfLife { get; set; }
+        public int TotalCaseCount { get; set; }
+        public string LabelSize { get; set; }
+        public string Header { get; set; }
+        public string Description { get; set; }
+        public DateTime CollectionTime { get; set; }
+        public bool Collected { get; set; }
+        public long ID { get; set; }
+        public bool Exported { get; set; }
+        public DateTime InsertDate { get; set; }
+    }
+}
+
+//view model class:
+using LMC_Other_InventoryData;
+
+namespace LMC_Other_MVC.Models
+{
+    public class LMC_InvData_RecordDetail_VM
+    {
+        public List<LMC_InvData_RecordDetail_Model> lo_InvData_RecordDetails { get; set; }
+        public string SerialNumber { get; set; }
+        public string ScaleId { get; set; }
+    }
+}
+//class repository:
+using System.Data;
+using System.Data.SqlClient;
+
+namespace LMC_Other_InventoryData
+{
+    public class LMC_InvData_RecordDetail_Repo
+    {
+        private readonly IDbConnection _conn;
+
+        public LMC_InvData_RecordDetail_Repo(IDbConnection conn)
+        {
+            _conn = conn;
+        }
+
+        public List<LMC_InvData_RecordDetail_Model> Get_Inventory_Record_Detail(string serialNumber, string scaleID)
+        {
+            List<LMC_InvData_RecordDetail_Model> lInvdataRecordsDetail = new();
+            LMC_InvData_RecordDetail_Model oInvdataRecordDetail;
+            SqlDataReader rdr;
+
+            try
+            {
+                using (SqlCommand oSQLCmd = new SqlCommand("usp_GetInventoryRecordDetail", (SqlConnection)_conn))
+                {
+                    _conn.Open();
+
+                    oSQLCmd.CommandType = CommandType.StoredProcedure;
+
+                    oSQLCmd.Parameters.Add(new SqlParameter("@SerialNumber", SqlDbType.VarChar, 12) { Value = serialNumber });
+                    oSQLCmd.Parameters.Add(new SqlParameter(("@ExScaleID"), SqlDbType.VarChar, 3) { Value = scaleID });
+
+                    rdr = oSQLCmd.ExecuteReader();
+
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            oInvdataRecordDetail = new LMC_InvData_RecordDetail_Model();
+
+                            oInvdataRecordDetail.ID = (long)rdr["ID"];
+                            oInvdataRecordDetail.SerialNo = rdr["SerialNo"].ToString();
+                            oInvdataRecordDetail.PalletNo = rdr["PalletNo"].ToString();
+                            oInvdataRecordDetail.ProductNo = rdr["ProductNo"].ToString();
+                            oInvdataRecordDetail.LotNo = rdr["LotNo"].ToString().ToLower();
+                            oInvdataRecordDetail.SartoriLotNumber = rdr["SartoriLotNumber"].ToString();
+                            oInvdataRecordDetail.StockNumber = rdr["StockNumber"].ToString();
+                            oInvdataRecordDetail.MfgID = rdr["MfgID"].ToString().ToLower();
+                            oInvdataRecordDetail.ProductDate = (DateTime)rdr["ProductDate"];
+                            oInvdataRecordDetail.PackDate = (DateTime)rdr["PackDate"];
+                            oInvdataRecordDetail.MakeDate = (DateTime)rdr["MakeDate"];
+                            oInvdataRecordDetail.CaseWeight = (decimal)rdr["CaseWeight"];
+                            oInvdataRecordDetail.TareWeight = (decimal)rdr["TareWeight"];
+                            oInvdataRecordDetail.AverageWeight = (decimal)rdr["AverageWeight"];
+                            oInvdataRecordDetail.ShelfLife = (int)rdr["ShelfLife"];
+                            oInvdataRecordDetail.TotalCaseCount = (int)rdr["TotalCaseCount"];
+                            oInvdataRecordDetail.LabelSize = rdr["LabelSize"].ToString();
+                            oInvdataRecordDetail.Header = rdr["Header"].ToString();
+                            oInvdataRecordDetail.Description = rdr["Description"].ToString();
+                            oInvdataRecordDetail.CollectionTime = (DateTime)rdr["CollectionTime"];
+                            oInvdataRecordDetail.Collected = (bool)rdr["Collected"];
+                            oInvdataRecordDetail.Exported = (bool)rdr["Exported"];
+                            oInvdataRecordDetail.InsertDate = (DateTime)rdr["InsertDate"];
+
+                            lInvdataRecordsDetail.Add(oInvdataRecordDetail);
+                        }
+                    }
+                }
+                rdr.Close();
+
+                return lInvdataRecordsDetail;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+    }
+}
+//controller:
+using LMC_Other_InventoryData;
+using LMC_Other_MVC.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace LMC_Other_MVC.Controllers
+{
+    public class LMC_InvData_RecordDetailController : Controller
+    {
+        private readonly LMC_InvData_RecordDetail_Repo _repo;
+
+        [HttpGet]
+        public IActionResult Index(string serialNumber, string scaleID)
+        {
+            List<LMC_InvData_RecordDetail_Model> lInvDataRecordDetails = _repo.Get_Inventory_Record_Detail(serialNumber, scaleID);
+
+            LMC_InvData_RecordDetail_VM oInvDataRecordDetailVM = new();
+
+            oInvDataRecordDetailVM.ScaleId = scaleID;
+            oInvDataRecordDetailVM.SerialNumber = serialNumber;
+            oInvDataRecordDetailVM.lo_InvData_RecordDetails = lInvDataRecordDetails;
+
+            return View(oInvDataRecordDetailVM);
+        }
+    }
+}
+//view:
+@model LMC_InvData_RecordDetail_VM
+
+@{
+    ViewData["Title"] = "Inventory Data Record Detail";
+}
+
+<div class="container mt-4">   
+
+    <h2 class="text-center">Record Details</h2>
+
+    <form method="get">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="serialNumber" class="form-label">Serial Number:</label>
+                <input type="serialNumber" class="form-control" name="serialNumber" id="serialNumber" value="@Model.SerialNumber" />
+            </div>
+            <div class="col-md-6">
+                <label for="scaleID" class="form-label">Scale ID:</label>
+                <input type="scaleID" class="form-control" name="scaleID" id="scaleID" value="@Model.ScaleId" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Go</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>SerialNo</th>
+                <th>PalletNo</th>
+                <th>ProductNo</th>
+                <th>LotNo</th>
+                <th>SartoriLotNumber</th>
+                <th>StockNumber</th>
+                <th>MfgID</th>
+                <th>ProductDate</th>
+                <th>PackDate</th>
+                <th>MakeDate</th>
+                <th>CaseWeight</th>
+                <th>TareWeight</th>
+                <th>AverageWeight</th>
+                <th>ShelfLife</th>
+                <th>TotalCaseCount</th>
+                <th>LabelSize</th>
+                <th>Header</th>
+                <th>Description</th>
+                <th>CollectionTime</th>
+                <th>Collected</th>
+                <th>ID</th>
+                <th>Exported</th>
+                <th>InsertDate</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.lo_InvData_RecordDetails)
+            {
+                <tr>
+                    <td>@item.SerialNo</td>
+                    <td>@item.PalletNo</td>
+                    <td>@item.ProductNo</td>
+                    <td>@item.LotNo</td>
+                    <td>@item.SartoriLotNumber</td>
+                    <td>@item.StockNumber</td>
+                    <td>@item.MfgID</td>
+                    <td>@item.ProductDate</td>
+                    <td>@item.PackDate</td>
+                    <td>@item.MakeDate</td>
+                    <td>@item.CaseWeight</td>
+                    <td>@item.TareWeight</td>
+                    <td>@item.AverageWeight</td>
+                    <td>@item.ShelfLife</td>
+                    <td>@item.TotalCaseCount</td>
+                    <td>@item.LabelSize</td>
+                    <td>@item.Header</td>
+                    <td>@item.Description</td>
+                    <td>@item.CollectionTime</td>
+                    <td>@item.Collected</td>
+                    <td>@item.ID</td>
+                    <td>@item.Exported</td>
+                    <td>@item.InsertDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+I'm trying to create a .net core mvc application using ADO.NET to retrieve data from a stored procedure from a sql server database. I am getting error here 'List<LMC_InvData_RecordDetail_Model> lInvDataRecordDetails = _repo.Get_Inventory_Record_Detail(serialNumber, scaleID);'.
+I get confused when dealing with 'Null' values
