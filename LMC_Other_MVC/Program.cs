@@ -15,7 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDbConnection>(sp => new SqlConnection(configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<LMC_InventoryData_Repo>();
-builder.Services.AddScoped<LMC_InvData_RecordDetail_Model>();
+builder.Services.AddScoped<LMC_InvData_RecordDetail_Repo>();
 
 var app = builder.Build();
 

@@ -12,14 +12,14 @@
         <div class="row">
             <div class="col-md-6">
                 <label for="serialNumber" class="form-label">Serial Number:</label>
-                <input type="serialNumber" class="form-control" name="serialNumber" id="serialNumber" value="@Model.SerialNumber" />
+                <input type="text"  class="form-control" name="serialNumber" id="serialNumber" value="@Model.SerialNumber" />
             </div>
             <div class="col-md-6">
                 <label for="scaleID" class="form-label">Scale ID:</label>
-                <input type="scaleID" class="form-control" name="scaleID" id="scaleID" value="@Model.ScaleId" />
+                <input type="text" class="form-control" name="scaleID" id="scaleID" value="@Model.ScaleID" />
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Go</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
     <table class="table">
@@ -52,33 +52,37 @@
         </thead>
 
         <tbody>
-            @foreach (var item in Model.lo_InvData_RecordDetails)
+            @if (Model != null)
             {
-                <tr>
-                    <td>@item.SerialNo</td>
-                    <td>@item.PalletNo</td>
-                    <td>@item.ProductNo</td>
-                    <td>@item.LotNo</td>
-                    <td>@item.SartoriLotNumber</td>
-                    <td>@item.StockNumber</td>
-                    <td>@item.MfgID</td>
-                    <td>@item.ProductDate</td>
-                    <td>@item.PackDate</td>
-                    <td>@item.MakeDate</td>
-                    <td>@item.CaseWeight</td>
-                    <td>@item.TareWeight</td>
-                    <td>@item.AverageWeight</td>
-                    <td>@item.ShelfLife</td>
-                    <td>@item.TotalCaseCount</td>
-                    <td>@item.LabelSize</td>
-                    <td>@item.Header</td>
-                    <td>@item.Description</td>
-                    <td>@item.CollectionTime</td>
-                    <td>@item.Collected</td>
-                    <td>@item.ID</td>
-                    <td>@item.Exported</td>
-                    <td>@item.InsertDate</td>
-                </tr>
+                @foreach (var item in Model.Lo_InvData_RecordDetails)
+                {
+                    <tr>
+                        <td>@item.SerialNo</td>
+                        <td>@item.PalletNo</td>
+                        <td>@item.ProductNo</td>
+                        <td>@item.LotNo</td>
+                        <td>@item.SartoriLotNumber</td>
+                        <td>@item.StockNumber</td>
+                        <td>@item.MfgID</td>
+                        <td>@item.ProductDate</td>
+                        <td>@item.PackDate</td>
+                        <td>@item.MakeDate</td>
+                        <td>@item.CaseWeight</td>
+                        <td>@item.TareWeight</td>
+                        <td>@item.AverageWeight</td>
+                        <td>@item.ShelfLife</td>
+                        <td>@item.TotalCaseCount</td>
+                        <td>@item.LabelSize</td>
+                        <td>@item.Header</td>
+                        <td>@item.Description</td>
+                        <td>@item.CollectionTime</td>
+                        <td>@item.Collected</td>
+                        <td>@item.ID</td>
+                        <td>@item.Exported</td>
+                        <td>@item.InsertDate</td>
+                    </tr>
+                }
+
             }
         </tbody>
     </table>

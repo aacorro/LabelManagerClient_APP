@@ -16,15 +16,36 @@ namespace LMC_Other_MVC.Controllers
         [HttpGet]
         public IActionResult Index(string serialNumber, string scaleID)
         {
-            List<LMC_InvData_RecordDetail_Model> lInvDataRecordDetails = _repo.Get_Inventory_Record_Detail(serialNumber, scaleID);
 
-            LMC_InvData_RecordDetail_VM oInvDataRecordDetailVM = new();
+            try
+            {
+                if (string.IsNullOrEmpty(scaleID) || string.IsNullOrEmpty(scaleID))
+                {
+                    return BadRequest("SerialNumber and ScaleID are required.");
+                }
 
-            oInvDataRecordDetailVM.ScaleId = scaleID;
-            oInvDataRecordDetailVM.SerialNumber = serialNumber;
-            oInvDataRecordDetailVM.lo_InvData_RecordDetails = lInvDataRecordDetails;
+                Console.WriteLine($"SerialNumber: {serialNumber}, ScaleID: {scaleID}");
 
-            return View(oInvDataRecordDetailVM);
+                List<LMC_InvData_RecordDetail_Model> lInvDataRecordDetails = _repo.Get_Inventory_Record_Detail(serialNumber, scaleID);
+
+                LMC_InvData_RecordDetail_VM oInvDataRecordDetailVM = new()
+                {
+                    ScaleID = scaleID,
+                    SerialNumber = serialNumber,
+                    Lo_InvData_RecordDetails = lInvDataRecordDetails
+                };
+
+                return View(oInvDataRecordDetailVM);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred: {ex.Message}");
+
+                return View("Error");
+            }
+
+            
         }
     }
 }

@@ -4,8 +4,8 @@ namespace LMC_Other_MVC.Models
 {
     public class LMC_InvData_RecordDetail_VM
     {
-        public List<LMC_InvData_RecordDetail_Model> lo_InvData_RecordDetails { get; set; }
-        public string SerialNumber { get; set; }
-        public string ScaleId { get; set; }
+        public List<LMC_InvData_RecordDetail_Model>? Lo_InvData_RecordDetails { get; set; }
+        public required string SerialNumber { get; set; }
+        public string? ScaleID { get; set; }
     }
 }
