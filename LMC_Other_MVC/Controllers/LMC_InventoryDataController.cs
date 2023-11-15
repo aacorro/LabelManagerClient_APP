@@ -16,22 +16,31 @@ namespace LMC_Other_MVC.Controllers
         [HttpGet]
         public IActionResult Index(DateTime? startDate, DateTime? endDate)
         {
-            if (startDate == null || endDate == null)
+            try
             {
-                endDate = DateTime.Now;
-                startDate = endDate.Value.AddDays(-30);
-                
+                if (startDate == null || endDate == null)
+                {
+                    endDate = DateTime.Now;
+                    startDate = endDate.Value.AddDays(-30);
+
+                }
+
+                List<LMC_InventoryData_Model> lInvDataExported = _repo.Get_InventoryData_Exported(startDate.Value, endDate.Value);
+
+                LMC_InventoryData_VM oInvDataVM = new LMC_InventoryData_VM();
+
+                oInvDataVM.StartDate = startDate.Value;
+                oInvDataVM.EndDate = endDate.Value;
+                oInvDataVM.loInvDataExp = lInvDataExported;
+
+                return View(oInvDataVM);
             }
-
-            List<LMC_InventoryData_Model> lInvDataExported = _repo.Get_InventoryData_Exported(startDate.Value, endDate.Value);
-
-            LMC_InventoryData_VM oInvDataVM = new LMC_InventoryData_VM();
-
-            oInvDataVM.StartDate = startDate.Value;
-            oInvDataVM.EndDate = endDate.Value;
-            oInvDataVM.loInvDataExp = lInvDataExported;
-
-            return View(oInvDataVM);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return View("Error");
+            }
+            
         }
     }
 }

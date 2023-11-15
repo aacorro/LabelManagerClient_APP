@@ -38,6 +38,7 @@ END
 GO
 
 //this is one of the 2 tables the stored procedure refers to:
+
 CREATE TABLE [dbo].[InventoryData](
 	[SerialNo] [varchar](12) NOT NULL,
 	[ProductNo] [varchar](5) NULL,
@@ -73,6 +74,7 @@ ALTER TABLE [dbo].[InventoryData] ADD  CONSTRAINT [DF_InventoryData_InsertDate] 
 GO
 
 //this is the another table the stored procedure refers to:
+
 REATE TABLE [dbo].[Pallet](
 	[PalletNumber] [varchar](18) NOT NULL,
 	[SerialNumber] [varchar](12) NOT NULL,
@@ -108,6 +110,7 @@ GO
 
 
 //database model class:
+
 namespace LMC_Other_InventoryData
 {
     public class LMC_InvData_RecordDetail_Model
@@ -139,14 +142,266 @@ namespace LMC_Other_InventoryData
 }
 
 
+
 //view model class:
+
+using LMC_Other_InventoryData;
+
+namespace LMC_Other_MVC.Models
+{
+    public class LMC_InvData_RecordDetail_VM
+    {
+        public List<LMC_InvData_RecordDetail_Model>? Lo_InvData_RecordDetails { get; set; }
+        public required string SerialNumber { get; set; }
+        public string? ScaleID { get; set; }
+    }
+}
+
 
 
 
 //class repository:
 
+using System.Data;
+using System.Data.SqlClient;
+
+namespace LMC_Other_InventoryData
+{
+    public class LMC_InvData_RecordDetail_Repo
+    {
+        private readonly IDbConnection _conn;
+
+        public LMC_InvData_RecordDetail_Repo(IDbConnection conn)
+        {
+            _conn = conn;
+        }
+
+        public List<LMC_InvData_RecordDetail_Model> Get_Inventory_Record_Detail(string serialNumber, string scaleID)
+        {
+            List<LMC_InvData_RecordDetail_Model> lInvdataRecordsDetail = new();
+            LMC_InvData_RecordDetail_Model oInvdataRecordDetail;
+            SqlDataReader rdr;
+
+            try
+            {
+                using (SqlCommand oSQLCmd = new SqlCommand("usp_GetInventoryRecordDetail", (SqlConnection)_conn))
+                {
+                    _conn.Open();
+
+                    oSQLCmd.CommandType = CommandType.StoredProcedure;
+
+                    oSQLCmd.Parameters.Add(new SqlParameter("@SerialNumber", SqlDbType.VarChar, 12) { Value = serialNumber });
+                    oSQLCmd.Parameters.Add(new SqlParameter("@ScaleID", SqlDbType.VarChar, 3) { Value = scaleID });
+
+
+                    rdr = oSQLCmd.ExecuteReader();
+
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            oInvdataRecordDetail = new LMC_InvData_RecordDetail_Model();
+
+                            oInvdataRecordDetail.ID = (long)rdr["ID"];
+                            oInvdataRecordDetail.SerialNo = rdr["SerialNumber"].ToString() ?? string.Empty;
+                            oInvdataRecordDetail.PalletNo = rdr["PalletNumber"].ToString();
+                            oInvdataRecordDetail.ProductNo = rdr["ProductNumber"].ToString();
+                            oInvdataRecordDetail.LotNo = rdr["LotNumber"].ToString();
+                            oInvdataRecordDetail.SartoriLotNumber = rdr["SartoriLotNumber"].ToString();
+                            oInvdataRecordDetail.StockNumber = rdr["StockNumber"].ToString();
+                            oInvdataRecordDetail.MfgID = rdr["MfgNumber"].ToString();
+                            oInvdataRecordDetail.ProductDate = (DateTime)rdr["ProductDate"];
+                            oInvdataRecordDetail.PackDate = (DateTime)rdr["PackDate"];
+                            oInvdataRecordDetail.MakeDate = (DateTime)rdr["MakeDate"];
+                            oInvdataRecordDetail.CaseWeight = (decimal)rdr["CaseWeight"];
+                            oInvdataRecordDetail.TareWeight = (decimal)rdr["TareWeight"];
+                            oInvdataRecordDetail.AverageWeight = (decimal)rdr["AverageWeight"];
+                            oInvdataRecordDetail.ShelfLife = (int)rdr["ShelfLife"];
+                            oInvdataRecordDetail.TotalCaseCount = (int)rdr["TotalCaseCount"];
+                            oInvdataRecordDetail.LabelSize = rdr["LabelSize"].ToString();
+                            oInvdataRecordDetail.Header = rdr["Header"].ToString();
+                            oInvdataRecordDetail.Description = rdr["Description"].ToString();
+                            oInvdataRecordDetail.CollectionTime = (DateTime)rdr["CollectionTime"];
+                            oInvdataRecordDetail.Collected = (bool)rdr["Collected"];
+                            oInvdataRecordDetail.Exported = (bool)rdr["Exported"];
+                            oInvdataRecordDetail.InsertDate = (DateTime)rdr["InsertDate"];
+
+                            lInvdataRecordsDetail.Add(oInvdataRecordDetail);
+                        }
+                    }
+                }
+                rdr.Close();
+
+                return lInvdataRecordsDetail;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+    }
+}
+
 
 //controller:
 
+using LMC_Other_InventoryData;
+using LMC_Other_MVC.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace LMC_Other_MVC.Controllers
+{
+    public class LMC_InvData_RecordDetailController : Controller
+    {
+        private readonly LMC_InvData_RecordDetail_Repo _repo;
+
+        public LMC_InvData_RecordDetailController(LMC_InvData_RecordDetail_Repo repo)
+        {
+            _repo = repo;
+        }
+
+        [HttpGet]
+        public IActionResult Index(string serialNumber, string? scaleID)
+        {
+
+            try
+            {
+                if (string.IsNullOrEmpty(scaleID) || string.IsNullOrEmpty(scaleID))
+                {
+                    serialNumber = string.Empty;        // "070101030098"
+                    scaleID = string.Empty;     // "70"
+                }
+
+                Console.WriteLine($"SerialNumber: {serialNumber}, ScaleID: {scaleID}");
+
+                List<LMC_InvData_RecordDetail_Model> lInvDataRecordDetails = _repo.Get_Inventory_Record_Detail(serialNumber, scaleID);
+
+                LMC_InvData_RecordDetail_VM oInvDataRecordDetailVM = new()
+                {
+                    ScaleID = scaleID,
+                    SerialNumber = serialNumber,
+                    Lo_InvData_RecordDetails = lInvDataRecordDetails
+                };
+
+                return View(oInvDataRecordDetailVM);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"An error occurred: {ex.Message}");
+
+                return View("Error");
+            }
+            
+        }
+    }
+}
+
+
+
 
 //view:
+
+@model LMC_InvData_RecordDetail_VM
+
+@{
+    ViewData["Title"] = "InvData Record Detail";
+}
+
+<div class="container mt-4">   
+
+    <h2 class="text-center">Record Details</h2>
+
+    <form asp-controller="LMC_InvData_RecordDetail" asp-action="Index" method="get">
+        <div class="row">
+            <div class="col-md-6">
+                <label asp-for="SerialNumber" class="form-label">Serial Number:</label>
+                <input asp-for="SerialNumber" type="text"  class="form-control" value="@Model.SerialNumber" />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="ScaleID" class="form-label">Scale ID:</label>
+                <input asp-for="ScaleID" type="text" class="form-control" value="@Model.ScaleID" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>SerialNo</th>
+                    <th>PalletNo</th>
+                    <th>ProductNo</th>
+                    <th>LotNo</th>
+                    <th>SartoriLotNumber</th>
+                    <th>StockNumber</th>
+                    <th>MfgID</th>
+                    <th>ProductDate</th>
+                    <th>PackDate</th>
+                    <th>MakeDate</th>
+                    <th>CaseWeight</th>
+                    <th>TareWeight</th>
+                    <th>AverageWeight</th>
+                    <th>ShelfLife</th>
+                    <th>TotalCaseCount</th>
+                    <th>LabelSize</th>
+                    <th>Header</th>
+                    <th>Description</th>
+                    <th>CollectionTime</th>
+                    <th>Collected</th>
+                    <th>ID</th>
+                    <th>InsertDate</th>
+                    <th>Exported</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model.Lo_InvData_RecordDetails)
+                    {
+                        <tr>
+                            <td>@item.SerialNo</td>
+                            <td>@item.PalletNo</td>
+                            <td>@item.ProductNo</td>
+                            <td>@item.LotNo</td>
+                            <td>@item.SartoriLotNumber</td>
+                            <td>@item.StockNumber</td>
+                            <td>@item.MfgID</td>
+                            <td>@item.ProductDate</td>
+                            <td>@item.PackDate</td>
+                            <td>@item.MakeDate</td>
+                            <td>@item.CaseWeight</td>
+                            <td>@item.TareWeight</td>
+                            <td>@item.AverageWeight</td>
+                            <td>@item.ShelfLife</td>
+                            <td>@item.TotalCaseCount</td>
+                            <td>@item.LabelSize</td>
+                            <td>@item.Header</td>
+                            <td>@item.Description</td>
+                            <td>@item.CollectionTime</td>
+                            <td>@item.Collected</td>
+                            <td>@item.ID</td>
+                            <td>@item.InsertDate</td>
+
+                            <td>
+                                @if (item.Exported.HasValue)
+                                {
+                                    @(item.Exported.Value ? "Yes" : "No")
+                                }
+                                else
+                                {
+                                    @("N/A")
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

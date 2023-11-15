@@ -14,14 +14,15 @@ namespace LMC_Other_MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(string serialNumber, string scaleID)
+        public IActionResult Index(string serialNumber, string? scaleID)
         {
 
             try
             {
                 if (string.IsNullOrEmpty(scaleID) || string.IsNullOrEmpty(scaleID))
                 {
-                    return BadRequest("SerialNumber and ScaleID are required.");
+                    serialNumber = string.Empty;
+                    scaleID = string.Empty;
                 }
 
                 Console.WriteLine($"SerialNumber: {serialNumber}, ScaleID: {scaleID}");
@@ -44,7 +45,6 @@ namespace LMC_Other_MVC.Controllers
 
                 return View("Error");
             }
-
             
         }
     }

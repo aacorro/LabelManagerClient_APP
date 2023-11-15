@@ -39,13 +39,13 @@ namespace LMC_Other_InventoryData
                             oInvdataRecordDetail = new LMC_InvData_RecordDetail_Model();
 
                             oInvdataRecordDetail.ID = (long)rdr["ID"];
-                            oInvdataRecordDetail.SerialNo = rdr["SerialNo"].ToString() ?? string.Empty;
-                            oInvdataRecordDetail.PalletNo = rdr["PalletNo"].ToString();
-                            oInvdataRecordDetail.ProductNo = rdr["ProductNo"].ToString();
-                            oInvdataRecordDetail.LotNo = rdr["LotNo"].ToString();
+                            oInvdataRecordDetail.SerialNo = rdr["SerialNumber"].ToString() ?? string.Empty;
+                            oInvdataRecordDetail.PalletNo = rdr["PalletNumber"].ToString();
+                            oInvdataRecordDetail.ProductNo = rdr["ProductNumber"].ToString();
+                            oInvdataRecordDetail.LotNo = rdr["LotNumber"].ToString();
                             oInvdataRecordDetail.SartoriLotNumber = rdr["SartoriLotNumber"].ToString();
                             oInvdataRecordDetail.StockNumber = rdr["StockNumber"].ToString();
-                            oInvdataRecordDetail.MfgID = rdr["MfgID"].ToString();
+                            oInvdataRecordDetail.MfgID = rdr["MfgNumber"].ToString();
                             oInvdataRecordDetail.ProductDate = (DateTime)rdr["ProductDate"];
                             oInvdataRecordDetail.PackDate = (DateTime)rdr["PackDate"];
                             oInvdataRecordDetail.MakeDate = (DateTime)rdr["MakeDate"];
