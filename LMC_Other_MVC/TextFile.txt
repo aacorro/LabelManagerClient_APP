@@ -146,13 +146,20 @@ namespace LMC_Other_InventoryData
 //view model class:
 
 using LMC_Other_InventoryData;
+using System.ComponentModel.DataAnnotations;
 
 namespace LMC_Other_MVC.Models
 {
     public class LMC_InvData_RecordDetail_VM
     {
         public List<LMC_InvData_RecordDetail_Model>? Lo_InvData_RecordDetails { get; set; }
+
+        [Required(ErrorMessage = "Serial Number is required")]
+        [StringLength(12/*, ErrorMessage = "Serial Number must be 12 characters"*/)]
         public required string SerialNumber { get; set; }
+
+        [Required(ErrorMessage = "Scale ID is required")]
+        [StringLength(3/*, ErrorMessage = "Scale ID must be 3 characters")*/)]
         public string? ScaleID { get; set; }
     }
 }
@@ -318,10 +325,12 @@ namespace LMC_Other_MVC.Controllers
             <div class="col-md-6">
                 <label asp-for="SerialNumber" class="form-label">Serial Number:</label>
                 <input asp-for="SerialNumber" type="text"  class="form-control" value="@Model.SerialNumber" />
+                <span asp-validation-for="SerialNumber" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <label asp-for="ScaleID" class="form-label">Scale ID:</label>
                 <input asp-for="ScaleID" type="text" class="form-control" value="@Model.ScaleID" />
+                <span asp-validation-for="ScaleID" class="text-danger"></span>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -405,3 +414,5 @@ namespace LMC_Other_MVC.Controllers
 
     </div>
 </div>
+
+

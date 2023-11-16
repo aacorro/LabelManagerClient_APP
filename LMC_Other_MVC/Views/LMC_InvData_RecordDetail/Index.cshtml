@@ -13,16 +13,18 @@
             <div class="col-md-6">
                 <label asp-for="SerialNumber" class="form-label">Serial Number:</label>
                 <input asp-for="SerialNumber" type="text"  class="form-control" value="@Model.SerialNumber" />
-@*                 <span asp-validation-for="SerialNumber" class="text-danger"></span>
- *@            </div>
+                <span asp-validation-for="SerialNumber" class="text-danger"></span>
+            </div>
             <div class="col-md-6">
                 <label asp-for="ScaleID" class="form-label">Scale ID:</label>
                 <input asp-for="ScaleID" type="text" class="form-control" value="@Model.ScaleID" />
-@*                 <span asp-validation-for="ScaleID" class="text-danger"></span>
- *@            </div>
+                <span asp-validation-for="ScaleID" class="text-danger"></span>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+
+  </form>
 
     <div class="table-responsive">
         <table class="table">
@@ -102,3 +104,7 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

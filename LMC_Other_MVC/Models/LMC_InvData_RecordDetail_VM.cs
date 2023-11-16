@@ -1,4 +1,5 @@
 ﻿using LMC_Other_InventoryData;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace LMC_Other_MVC.Models
@@ -7,12 +8,14 @@ namespace LMC_Other_MVC.Models
     {
         public List<LMC_InvData_RecordDetail_Model>? Lo_InvData_RecordDetails { get; set; }
 
-        //[Required(ErrorMessage = "Serial Number is required")]
-        //[StringLength(12, ErrorMessage = "Serial Number must be 3 characters")]
-        public required string SerialNumber { get; set; }
+        [Required]
+        [StringLength(12)]
+        [DisplayName("Serial Number")]
+        public string? SerialNumber { get; set; }
 
-        //[Required(ErrorMessage = "Scale ID is required")]
-        //[StringLength(3, ErrorMessage = "Scale ID must be 3 characters")]
+        [Required]
+        [StringLength(2)]
+        [DisplayName("Scale ID")]
         public string? ScaleID { get; set; }
     }
 }

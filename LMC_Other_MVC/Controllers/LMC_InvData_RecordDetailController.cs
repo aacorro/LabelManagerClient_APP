@@ -14,20 +14,22 @@ namespace LMC_Other_MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(string serialNumber, string? scaleID)
+        public IActionResult Index(string? serialNumber, string? scaleID)
         {
 
             try
             {
                 if (string.IsNullOrEmpty(scaleID) || string.IsNullOrEmpty(scaleID))
                 {
-                    serialNumber = string.Empty;
-                    scaleID = string.Empty;
+                    serialNumber = string.Empty;  // "070101030098"
+                    scaleID = string.Empty;    // "70"
                 }
 
                 Console.WriteLine($"SerialNumber: {serialNumber}, ScaleID: {scaleID}");
 
-                List<LMC_InvData_RecordDetail_Model> lInvDataRecordDetails = _repo.Get_Inventory_Record_Detail(serialNumber, scaleID);
+
+                List<LMC_InvData_RecordDetail_Model> lInvDataRecordDetails = string.IsNullOrEmpty(serialNumber) ? new List<LMC_InvData_RecordDetail_Model>() : _repo.Get_Inventory_Record_Detail(serialNumber, scaleID);
+
 
                 LMC_InvData_RecordDetail_VM oInvDataRecordDetailVM = new()
                 {
