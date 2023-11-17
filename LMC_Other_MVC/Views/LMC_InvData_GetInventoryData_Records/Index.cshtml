@@ -1,0 +1,62 @@
+﻿@model LMC_InvData_GetInventoryDataRecords_VM
+
+@{
+    ViewData["Title"] = "Get Upload InvData Records";
+}
+
+<div class="container">
+
+    <h2 class="text-center">Inventory Records</h2>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>SerialNo</th>
+                    <th>ProductNo</th>
+                    <th>BestBy</th>
+                    <th>CaseWeight</th>
+                    <th>PackDate</th>
+                    <th>ScaleName</th>
+                    <th>ScaleID</th>
+                    <th>PalletNo</th>
+                    <th>LotNo</th>
+                    <th>ID</th>
+                    <th>MfgID</th>
+                    <th>CollecionTime</th>
+                    <th>Exported</th>
+                    <th>ExportFailed</th>
+                    <th>FailureCount</th>
+                    <th>LastFailure</th>
+                    <th>InsertDate</th>
+                </tr>
+            </thead>
+
+           <tbody>
+                   @foreach (var item in Model.loInvDat_GetInvDataRecords)
+                    {
+                        <tr>
+                            <td>@item.SerialNo</td>
+                            <td>@item.ProductNo</td>
+                            <td>@item.BestBy</td>
+                            <td>@item.CaseWeight</td>
+                            <td>@item.PackDate</td>
+                            <td>@item.ScaleName</td>
+                            <td>@item.ScaleID</td>
+                            <td>@item.PalletNo</td>
+                            <td>@item.LotNo</td>
+                            <td>@item.ID</td>
+                            <td>@item.MfgID</td>
+                            <td>@item.CollectionTime</td>
+                            <td>@item.Exported</td>
+                            <td>@item.ExportFailed</td>
+                            <td>@item.FailureCount</td>
+                            <td>@item.LastFailure</td>
+                            <td>@item.InsertDate</td>
+                        </tr>
+                    }
+           </tbody>
+        </table>
+    </div>
+
+</div>

@@ -1,4 +1,4 @@
-﻿using LMC_Other_InventoryData;
+﻿using LMC_Other_InventoryData.DB_Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 

@@ -1,4 +1,5 @@
 ﻿using LMC_Other_InventoryData;
+using LMC_Other_InventoryData.DB_Models;
 using LMC_Other_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 

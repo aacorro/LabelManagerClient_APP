@@ -1,8 +1,8 @@
-﻿namespace LMC_Other_InventoryData
+﻿namespace LMC_Other_InventoryData.DB_Models
 {
     public class LMC_InvData_RecordDetail_Model
     {
-        public  string? SerialNo { get; set; }
+        public string? SerialNo { get; set; }
         public string? PalletNo { get; set; }
         public string? ProductNo { get; set; }
         public string? LotNo { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using LMC_Other_InventoryData.DB_Models;
 
 namespace LMC_Other_InventoryData
 {

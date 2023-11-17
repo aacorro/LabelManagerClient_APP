@@ -1,4 +1,5 @@
 ﻿using LMC_Other_InventoryData;
+using LMC_Other_InventoryData.DB_Models;
 using LMC_Other_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,7 @@ namespace LMC_Other_MVC.Controllers
                     scaleID = string.Empty;    // "70"
                 }
 
-                Console.WriteLine($"SerialNumber: {serialNumber}, ScaleID: {scaleID}");
+                //Console.WriteLine($"SerialNumber: {serialNumber}, ScaleID: {scaleID}");
 
 
                 List<LMC_InvData_RecordDetail_Model> lInvDataRecordDetails = string.IsNullOrEmpty(serialNumber) ? new List<LMC_InvData_RecordDetail_Model>() : _repo.Get_Inventory_Record_Detail(serialNumber, scaleID);

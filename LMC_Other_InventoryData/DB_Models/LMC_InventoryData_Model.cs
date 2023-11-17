@@ -1,4 +1,4 @@
-﻿namespace LMC_Other_InventoryData
+﻿namespace LMC_Other_InventoryData.DB_Models
 {
     public class LMC_InventoryData_Model
     {
