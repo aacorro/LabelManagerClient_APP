@@ -20,7 +20,7 @@ namespace LMC_Other_MVC.Controllers
 
             try
             {
-                if (string.IsNullOrEmpty(scaleID) || string.IsNullOrEmpty(scaleID))
+                if (string.IsNullOrEmpty(serialNumber) || string.IsNullOrEmpty(scaleID))
                 {
                     serialNumber = string.Empty;  // "070101030098"
                     scaleID = string.Empty;    // "70"

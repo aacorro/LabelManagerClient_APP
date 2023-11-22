@@ -1,0 +1,107 @@
+﻿@model LMC_Pallet_GetPalletRecords_VM
+
+@{
+    ViewData["Title"] = "Pallet Record Details";
+}
+
+
+<div class="container mt-4">
+
+    <h2 class="text-center">Pallet Record Details</h2>
+
+    <form asp-controller="LMC_Pallet_GetPalletRecord" asp-action="Index" method="get">
+        <div class="row">
+            <div class="col-md-6">
+                <label asp-for="SerialNumber" class="form-label">Serial Number:</label>
+                <input asp-for="SerialNumber" type="text" class="form-control" value="@Model.SerialNumber" />
+                <span asp-validation-for="SerialNumber" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="ScaleID" class="form-label">Scale ID:</label>
+                <input asp-for="ScaleID" type="text" class="form-control" value="@Model.ScaleID" />
+                <span asp-validation-for="ScaleID" class="text-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+
+    </form>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Serial No</th>
+                    <th>Pallet No</th>
+                    <th>Product No</th>
+                    <th>Lot No</th>
+                    <th>Sartori Lot No</th>
+                    <th>Stock Number</th>
+                    <th>Mfg No</th>
+                    <th>Product Date</th>
+                    <th>Pack Date</th>
+                    <th>Make Date</th>
+                    <th>Case Weight</th>
+                    <th>Tare Weight</th>
+                    <th>Average Weight</th>
+                    <th>Shelf Life</th>
+                    <th>Total Case Count</th>
+                    <th>Label Size</th>
+                    <th>Header</th>
+                    <th>Description</th>
+                    <th>Collection Time</th>
+                    <th>Collected</th>
+                    <th>ID</th>
+                    <th>Exported</th>
+                    <th>Insert Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model.Lo_Pallet_PalletRecordDetails)
+                    {
+                        <tr>
+                            <td>@item.SerialNumber</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+                            <td>@item</td>
+
+                            <td>
+                                @if (item.Exported.HasValue)
+                                {
+                                    @(item.Exported.Value ? "Yes" : "No")
+                                }
+                                else
+                                {
+                                    @("N/A")
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
