@@ -1,0 +1,86 @@
+﻿@model LMC_PrintStringLog_GetPrintStringsByPallet_VM
+
+@{
+    ViewData["Title"] = "String Logs By Pallet";
+}
+
+<div class="container mt-4">
+
+    <h2 class="text-center">String Logs By Pallet</h2>
+
+    <form asp-controller="LMC_PrintStringLog_GetPrintStringsByPallet" asp-action="Index" method="get">
+        <div class="row">
+            <div class="col-md-6">
+                <label asp-for="PalletNumber" class="form-label">Pallet Number:</label>
+                <input asp-for="PalletNumber" type="text" class="form-control" value="@Model.PalletNumber" />
+                <span asp-validation-for="PalletNumber" class="text-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+
+    </form>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Pk Print String Log ID</th>
+                    <th>Serial No</th>
+                    <th>Product No</th>
+                    <th>Pallet No</th>
+                    <th>Print String</th>
+                    <th>Scale Name</th>
+                    <th>Scale ID</th>
+                    <th>Insert Date</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.lo_PrintStringLog_GetPrintStringsByPallet.Count == 0)
+                {
+                    <tr>
+                        <td colspan="7">No data available</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.lo_PrintStringLog_GetPrintStringsByPallet)
+                    {
+                        <tr>
+                            <td>@item.pkPrintStringLogID</td>
+                            <td>@item.SerialNumber</td>
+                            <td>@item.ProductNumber</td>
+                            <td>@item.PalletNumber</td>
+                            <td>@item.PrintString</td>
+                            <td>@item.ScaleName</td>
+                            <td>@item.ScaleID</td>
+                            <td>@item.InsertDate</td>
+@* 
+
+                            <td>
+                                @if (item.Exported.HasValue)
+                                {
+                                    @(item.Exported.Value ? "Yes" : "No")
+                                }
+                                else
+                                {
+                                    @("N/A")
+                                }
+                            </td>
+
+                            <td>@item.InsertDate</td> *@
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

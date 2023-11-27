@@ -9,7 +9,7 @@
 
     <h2 class="text-center">Pallet Record Details</h2>
 
-    <form asp-controller="LMC_Pallet_GetPalletRecord" asp-action="Index" method="get">
+    <form asp-controller="LMC_Pallet_GetPalletRecords" asp-action="Index" method="get">
         <div class="row">
             <div class="col-md-6">
                 <label asp-for="SerialNumber" class="form-label">Serial Number:</label>
@@ -58,33 +58,39 @@
             </thead>
 
             <tbody>
-                @if (Model != null)
+                @if (Model.Lo_Pallet_PalletRecordDetails.Count == 0)
+                {
+                    <tr>
+                        <td colspan="7">No data available</td>
+                    </tr>
+                }
+                else
                 {
                     @foreach (var item in Model.Lo_Pallet_PalletRecordDetails)
                     {
                         <tr>
                             <td>@item.SerialNumber</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
-                            <td>@item</td>
+                            <td>@item.PalletNumber</td>
+                            <td>@item.ProductNumber</td>
+                            <td>@item.LotNumber</td>
+                            <td>@item.SartoriLotNumber</td>
+                            <td>@item.StockNumber</td>
+                            <td>@item.MfgNumber</td>
+                            <td>@item.ProductDate</td>
+                            <td>@item.PackDate</td>
+                            <td>@item.MakeDate</td>
+                            <td>@item.CaseWeight</td>
+                            <td>@item.TareWeight</td>
+                            <td>@item.AverageWeight</td>
+                            <td>@item.ShelfLife</td>
+                            <td>@item.TotalCaseCount</td>
+                            <td>@item.LabelSize</td>
+                            <td>@item.Header</td>
+                            <td>@item.Description</td>
+                            <td>@item.CollectionTime</td>
+                            <td>@item.Collected</td>
+                            <td>@item.ID</td>
+                            
 
                             <td>
                                 @if (item.Exported.HasValue)
@@ -96,6 +102,8 @@
                                     @("N/A")
                                 }
                             </td>
+
+                            <td>@item.InsertDate</td>
                         </tr>
                     }
 
@@ -105,3 +113,7 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

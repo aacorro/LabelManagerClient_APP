@@ -29,7 +29,7 @@ namespace LMC_Other_InventoryData.DB_Models
         public DateTime? CollectionTime { get; set;}
         public bool? Collected { get; set;}
         public long ID { get; set;}
-        public int? Exported { get; set;}
+        public bool? Exported { get; set;}
         public DateTime? InsertDate { get; set;}
     }
 }

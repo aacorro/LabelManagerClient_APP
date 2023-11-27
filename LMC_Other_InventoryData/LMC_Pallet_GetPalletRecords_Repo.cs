@@ -63,7 +63,7 @@ namespace LMC_Other_InventoryData
                             oPalletRecordDetail.CollectionTime = (DateTime)rdr["CollectionTime"];
                             oPalletRecordDetail.Collected = (bool)rdr["Collected"];
                             oPalletRecordDetail.ID = (long)rdr["ID"];
-                            oPalletRecordDetail.Exported = (int)rdr["Exported"];
+                            oPalletRecordDetail.Exported = rdr["Exported"] as bool? ?? default(bool);
                             oPalletRecordDetail.InsertDate = (DateTime)rdr["InsertDate"];
 
                             lPalletRecordDetails.Add(oPalletRecordDetail);

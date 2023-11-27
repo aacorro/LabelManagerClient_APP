@@ -18,6 +18,8 @@ builder.Services.AddScoped<LMC_InventoryData_Repo>();
 builder.Services.AddScoped<LMC_InvData_RecordDetail_Repo>();
 builder.Services.AddScoped<LMC_InvData_GetInventoryDataRecords_Repo>();
 builder.Services.AddScoped<LMC_LabelCounter_GetUploadLabelCounterRecords_Repo>();
+builder.Services.AddScoped<LMC_Pallet_GetPalletRecords_Repo>();
+builder.Services.AddScoped<LMC_PrintStringLog_GetPrintStringsByPallet_Repo>();
 
 var app = builder.Build();
 

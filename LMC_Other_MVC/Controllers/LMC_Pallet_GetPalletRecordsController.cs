@@ -14,6 +14,7 @@ namespace LMC_Other_MVC.Controllers
             _repo = repo;
         }
 
+        [HttpGet]
         public IActionResult Index(string? serialNumber, string? scaleID)
         {
             try
@@ -32,7 +33,7 @@ namespace LMC_Other_MVC.Controllers
                     SerialNumber = serialNumber,
                     Lo_Pallet_PalletRecordDetails = lPallet_PalletRecordDetails
                 };
-                return View();
+                return View(oPalletGetRecordDetail);
             }
             catch (Exception ex)
             {
