@@ -24,7 +24,7 @@ namespace LMC_Other_MVC.Controllers
                     palletNumber = string.Empty;
                 }
 
-                List<LMC_PrintStringLog_GetPrintStringsByPallet_Model> lPrintStringLog_GetPrintStringsByPallet = new();
+                List<LMC_PrintStringLog_GetPrintStringsByPallet_Model> lPrintStringLog_GetPrintStringsByPallet = _repo.GetPrintStringsByPallet(palletNumber);
 
                 LMC_PrintStringLog_GetPrintStringsByPallet_VM oPrintStringLog_GetPrintStringsByPallet = new()
                 {
@@ -44,4 +44,3 @@ namespace LMC_Other_MVC.Controllers
         }
     }
 }
-//retrieving a single object not a list!
