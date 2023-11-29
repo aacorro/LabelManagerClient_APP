@@ -29,11 +29,10 @@
                     <th>Serial No</th>
                     <th>Product No</th>
                     <th>Pallet No</th>
-                    <th>Print String</th>
                     <th>Scale Name</th>
                     <th>Scale ID</th>
                     <th>Insert Date</th>
-
+                    <th>Print String</th>
                 </tr>
             </thead>
 
@@ -53,24 +52,10 @@
                             <td>@item.SerialNumber</td>
                             <td>@item.ProductNumber</td>
                             <td>@item.PalletNumber</td>
-                            <td>@item.PrintString</td>
                             <td>@item.ScaleName</td>
                             <td>@item.ScaleID</td>
                             <td>@item.InsertDate</td>
-@* 
-
-                            <td>
-                                @if (item.Exported.HasValue)
-                                {
-                                    @(item.Exported.Value ? "Yes" : "No")
-                                }
-                                else
-                                {
-                                    @("N/A")
-                                }
-                            </td>
-
-                            <td>@item.InsertDate</td> *@
+                            <td>@item.PrintString</td>
                         </tr>
                     }
 

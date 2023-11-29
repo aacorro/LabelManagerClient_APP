@@ -1,1 +1,10 @@
-﻿
+﻿/*
+'WHERE inv.InsertDate >= DATEADD(D, -30, inv.InsertDate)'
+This line is a condition that filters the rows from the InventoryData table based on a specific condition involving the InsertDate column.
+
+DATEADD(D, -30, inv.InsertDate): This is a function that adds a specified number of days (in this case, -30 days) to the InsertDate. The DATEADD function is used here to calculate a date that is 30 days before each InsertDate.
+
+WHERE inv.InsertDate >= DATEADD(D, -30, inv.InsertDate): This condition filters the rows where the InsertDate is greater than or equal to the date that is 30 days before the InsertDate. In other words, it selects rows where the InsertDate is within the last 30 days.
+
+So, this line is ensuring that only rows with an InsertDate within the last 30 days are included in the result set. It's a way to focus on recent data in your query.
+*/
