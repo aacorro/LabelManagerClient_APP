@@ -1,4 +1,5 @@
 using LMC_Other_InventoryData;
+using LMC_Other_InventoryData.DB_Models;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -20,6 +21,7 @@ builder.Services.AddScoped<LMC_InvData_GetInventoryDataRecords_Repo>();
 builder.Services.AddScoped<LMC_LabelCounter_GetUploadLabelCounterRecords_Repo>();
 builder.Services.AddScoped<LMC_Pallet_GetPalletRecords_Repo>();
 builder.Services.AddScoped<LMC_PrintStringLog_GetPrintStringsByPallet_Repo>();
+builder.Services.AddScoped<LMC_SyncTime_UpdateSyncTimeUploadRecords_Repo>();
 
 var app = builder.Build();
 
