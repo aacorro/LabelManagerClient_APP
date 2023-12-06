@@ -25,12 +25,10 @@ namespace LMC_Other_InventoryData.DB_Models
 
                     oSQLCmd.CommandType = CommandType.StoredProcedure;
 
-                    // Create a SqlParameter for @LastRecordDate
                     SqlParameter lastRecordDateParam = new SqlParameter("@LastRecordDate", SqlDbType.DateTime);
                     lastRecordDateParam.Value = DateTime.Parse("10-10-2023");
                     oSQLCmd.Parameters.Add(lastRecordDateParam);
 
-                    // Create a SqlParameter for @Status
                     SqlParameter statusParam = new SqlParameter("@Status", SqlDbType.Int);
                     statusParam.Direction = ParameterDirection.Output;
                     oSQLCmd.Parameters.Add(statusParam);
@@ -52,9 +50,8 @@ namespace LMC_Other_InventoryData.DB_Models
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
-                // Log the exception or handle it as needed
-                // Set a default or meaningful value for Status
-                oUpdateSyncTimeUploadRecords.Status = -1; // Example: Set a default value for Status
+
+                oUpdateSyncTimeUploadRecords.Status = -1; // Default value for error Status
             }
             finally
             {

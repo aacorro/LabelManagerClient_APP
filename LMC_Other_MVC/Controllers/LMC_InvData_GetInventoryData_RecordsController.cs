@@ -1,4 +1,5 @@
 ﻿using LMC_Other_InventoryData;
+using LMC_Other_InventoryData.DB_Models;
 using LMC_Other_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,13 +18,26 @@ namespace LMC_Other_MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var olInvDataRecords =  _repo.GetUploadInventoryRecords();
-
-            var viewModel = new LMC_InvData_GetInventoryDataRecords_VM
+            try
             {
-                loInvDat_GetInvDataRecords = olInvDataRecords,
-            };
-            return View(viewModel);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                List<LMC_GetUpload_InventoryRecords_Model> olInvDataRecords = _repo.GetUploadInventoryRecords();
+
+                LMC_InvData_GetInventoryDataRecords_VM viewModel = new LMC_InvData_GetInventoryDataRecords_VM();
+                
+                viewModel.loInvDat_GetInvDataRecords = olInvDataRecords;
+
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

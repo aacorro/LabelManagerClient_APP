@@ -1,0 +1,57 @@
+﻿@model LMC_Pallet_GetNonCollected_VM
+
+@{
+    ViewData["Title"] = "Get Non Collected";
+}
+
+<div class="container">
+
+    <h2 class="text-center">Get Non Collected</h2>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>PalletNumber</th>
+                    <th>ProductNumber</th>
+                    <th>LotNumber</th>
+                    <th>SerialNumber</th>
+                    <th>InsertDate</th>
+                    <th>Description</th>
+                    <th>Collected</th>
+                    
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.lNonCollected_From_VM.Count == 0)
+                {
+                    <tr>
+                        <td colspan="7">No data available</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model.lNonCollected_From_VM)
+                    {
+                        <tr>
+                            <td>@item.PalletNumber</td>
+                            <td>@item.ProductNumber</td>
+                            <td>@item.LotNumber</td>
+                            <td>@item.SerialNumber</td>
+                            <td>@item.InsertDate</td>
+                            <td>@item.Description</td>
+                            <td>@item.Collected</td>
+                            <td>@item.InsertDate</td>
+                        </tr>
+                    }
+                }
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

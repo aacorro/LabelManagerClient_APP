@@ -22,6 +22,7 @@ builder.Services.AddScoped<LMC_LabelCounter_GetUploadLabelCounterRecords_Repo>()
 builder.Services.AddScoped<LMC_Pallet_GetPalletRecords_Repo>();
 builder.Services.AddScoped<LMC_PrintStringLog_GetPrintStringsByPallet_Repo>();
 builder.Services.AddScoped<LMC_SyncTime_UpdateSyncTimeUploadRecords_Repo>();
+builder.Services.AddScoped<LMC_Pallet_GetNonCollected_Repo>();
 
 var app = builder.Build();
 
