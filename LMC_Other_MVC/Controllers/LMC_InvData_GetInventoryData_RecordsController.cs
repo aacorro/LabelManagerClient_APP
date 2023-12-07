@@ -27,11 +27,11 @@ namespace LMC_Other_MVC.Controllers
 
                 List<LMC_GetUpload_InventoryRecords_Model> olInvDataRecords = _repo.GetUploadInventoryRecords();
 
-                LMC_InvData_GetInventoryDataRecords_VM viewModel = new LMC_InvData_GetInventoryDataRecords_VM();
+                LMC_InvData_GetInventoryDataRecords_VM oViewModel = new LMC_InvData_GetInventoryDataRecords_VM();
                 
-                viewModel.loInvDat_GetInvDataRecords = olInvDataRecords;
+                oViewModel.loInvDat_GetInvDataRecords = olInvDataRecords;
 
-                return View(viewModel);
+                return View(oViewModel);
             }
             catch (Exception)
             {
