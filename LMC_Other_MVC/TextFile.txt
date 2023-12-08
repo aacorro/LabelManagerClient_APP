@@ -8,3 +8,31 @@ WHERE inv.InsertDate >= DATEADD(D, -30, inv.InsertDate): This condition filters 
 
 So, this line is ensuring that only rows with an InsertDate within the last 30 days are included in the result set. It's a way to focus on recent data in your query.
 */
+
+
+Stored procedures implemented on the app:
+-usp_Get_All_No_Exported_Dynamic_W_ExportedColumn
+-usp_GetInventoryRecordDetail
+-usp_GetPalletRecordDetail
+-usp_GetPrintStringsByPallet
+-usp_GetUploadInventoryRecords
+-usp_GetUploadLabelCounterRecords_WParms
+-usp_Pallet_GetNonCollected 
+
+
+next:
+[dbo].[usp_GetUploadPalletExactRecords]
+[dbo].[usp_GetPalletExactSummaryLastLabelDate]
+
+
+
+I wanted to express my sincere gratitude for the opportunity to intern with Belgioioso Cheese over the past three months. The experience has been invaluable, and I appreciate the chance to gain real-world exposure in a professional setting.
+
+While I am grateful for the opportunity, I wanted to share some feedback on my internship experience. I understand that the company may not have a formalized internship plan, and I recognize that I initiated this opportunity. However, I believe that having a more structured plan or mentorship system in place could enhance the overall learning experience for future interns.
+
+I found the experience beneficial, but I believe a more defined structure could help interns like me maximize their contributions and learning. Perhaps a clear outline of expectations, regular check-ins, or assigned projects could provide a more enriching experience for future interns.
+
+Once again, thank you for this opportunity, and I look forward to applying the skills and knowledge I've gained in my future endeavors. I appreciate your understanding and consideration.
+
+Best regards,
+AC

@@ -23,6 +23,7 @@ builder.Services.AddScoped<LMC_Pallet_GetPalletRecords_Repo>();
 builder.Services.AddScoped<LMC_PrintStringLog_GetPrintStringsByPallet_Repo>();
 builder.Services.AddScoped<LMC_SyncTime_UpdateSyncTimeUploadRecords_Repo>();
 builder.Services.AddScoped<LMC_Pallet_GetNonCollected_Repo>();
+builder.Services.AddScoped<LMC_PalletExact_GetPalletExactSummaryLastLabelDate_Repo>();
 
 var app = builder.Build();
 
