@@ -1,7 +1,8 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using LMC_Other_InventoryData.DB_Models;
 
-namespace LMC_Other_InventoryData.DB_Models
+namespace LMC_Other_InventoryData
 {
     public class LMC_SyncTime_UpdateSyncTimeUploadRecords_Repo
     {
@@ -15,7 +16,7 @@ namespace LMC_Other_InventoryData.DB_Models
         public LMC_SyncTime_UpdateSyncTimeUploadRecords_Model UploadRecords()
         {
             LMC_SyncTime_UpdateSyncTimeUploadRecords_Model oUpdateSyncTimeUploadRecords = new();
-            SqlDataReader rdr = null ;
+            SqlDataReader rdr = null;
 
             try
             {

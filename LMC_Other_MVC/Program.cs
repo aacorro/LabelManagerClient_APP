@@ -1,5 +1,6 @@
 using LMC_Other_InventoryData;
-using LMC_Other_InventoryData.DB_Models;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -24,6 +25,17 @@ builder.Services.AddScoped<LMC_PrintStringLog_GetPrintStringsByPallet_Repo>();
 builder.Services.AddScoped<LMC_SyncTime_UpdateSyncTimeUploadRecords_Repo>();
 builder.Services.AddScoped<LMC_Pallet_GetNonCollected_Repo>();
 builder.Services.AddScoped<LMC_PalletExact_GetPalletExactSummaryLastLabelDate_Repo>();
+
+
+// Serilog configuration
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File("app.log", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Logging.AddSerilog();
+
+//// Logging configuration
+//builder.Logging.AddFile("app.log"); 
 
 var app = builder.Build();
 

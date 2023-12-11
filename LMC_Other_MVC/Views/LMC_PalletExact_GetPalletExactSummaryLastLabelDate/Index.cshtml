@@ -4,28 +4,29 @@
     ViewData["Title"] = "Last Label Date";
 }
 
-<div class="container">
+<div class="container mt-4">
 
-    <h2>Get Last Label Date</h2>
+    <h2 class="text-center mb-4">Get Last Label Date</h2>
 
-    <form asp-action="Index" method="get">
-        <div>
-            <label for="productNumber">Product Number:</label>
-            <input type="text" id="productNumber" name="productNumber" required />
+    <form asp-controller="LMC_PalletExact_GetPalletExactSummaryLastLabelDate" asp-action="Index" method="get">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="productNumber">Product Number:</label>
+                <input type="text" id="productNumber" name="productNumber" required />
+            </div>
+            <div class="col-md-4">
+                <label for="runStartDate">Run Start Date:</label>
+                <input type="date" id="runStartDate" name="runStartDate" required />
+            </div>
+
+            <div class="col-md-4">
+                <label for="runEndDate">Run End Date:</label>
+                <input type="date" id="runEndDate" name="runEndDate" required />
+            </div>
         </div>
 
         <div>
-            <label for="runStartDate">Run Start Date:</label>
-            <input type="date" id="runStartDate" name="runStartDate" required />
-        </div>
-
-        <div>
-            <label for="runEndDate">Run End Date:</label>
-            <input type="date" id="runEndDate" name="runEndDate" required />
-        </div>
-
-        <div>
-            <button type="submit">Submit</button>
+            <button type="submit" class="btn btn-primary mt-2">Submit</button>
         </div>
     </form>
 
@@ -34,6 +35,12 @@
         <div>
             <h3>Result:</h3>
             <p>Last Label Date: @Model.LastLabelDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+        </div>
+    }
+    else
+    {
+        <div>
+            <p>No data available for the selected data range</p>
         </div>
     }
 
