@@ -19,15 +19,18 @@ namespace LMC_Other_InventoryData
 
         /// <summary>
         /// GetUploadLabelCounterRecords_Repos
-        ///     -Gets the label counter records from LabelCounter based on @StartDate and @EndDate values.
+        ///     - Gets the label counter records from LabelCounter based on @StartDate and @EndDate values.
         /// </summary>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns>list of label counter records</returns>
         public List<LMC_LabelCounter_GetUploadLabelCounterRecords_Model> GetUploadLabelCounterRecords_Repos(DateTime? startDate, DateTime? endDate)
         {
+            // Create a list to store the model objects 
             List<LMC_LabelCounter_GetUploadLabelCounterRecords_Model> lLabelCounterRecords = new();
+            // Declare an instance of the model for holding label counter records
             LMC_LabelCounter_GetUploadLabelCounterRecords_Model oLabelCounterRecord;
+            // Declare a SqlDataReader to read the results from the SQL query execution
             SqlDataReader rdr;
 
             try
@@ -59,7 +62,7 @@ namespace LMC_Other_InventoryData
 
                             //Load all record data into inventory records detail object
                             oLabelCounterRecord.pkLabelCounterID = rdr["pkLabelCounterID"] as long? ?? default(long);
-                            oLabelCounterRecord.ScaleName = rdr["ScaleName"] as string ?? default(string);//setting ScaleName property from SqlDataReader...
+                            oLabelCounterRecord.ScaleName = rdr["ScaleName"] as string ?? default(string); //setting ScaleName property from SqlDataReader...
                             oLabelCounterRecord.ScaleID = rdr["ScaleID"] as int? ?? default(int);
                             oLabelCounterRecord.VariationNo = rdr["VariationNo"] as string ?? default(string);
                             oLabelCounterRecord.ProductNo = rdr["ProductNo"] as string ?? default(string);
@@ -92,6 +95,10 @@ namespace LMC_Other_InventoryData
                 Log.Error("GetUploadLabelCounterRecords_Repos", "Error", ex.Message, ex.StackTrace);
 
                 return null; // Return null in case of an exception
+            }
+            finally
+            {
+                _conn.Close(); // Ensure connection is closed, even if an exception occurs.
             }
         }
     }

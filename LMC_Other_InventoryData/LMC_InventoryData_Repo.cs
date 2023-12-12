@@ -24,11 +24,14 @@ namespace LMC_Other_InventoryData
         /// </summary>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
-        /// <returns>list of inventory data no exported</returns>
+        /// <returns>List of inventory data no exported</returns>
         public List<LMC_InventoryData_Model> Get_InventoryData_Exported(DateTime startDate, DateTime endDate)
         {
+            // Create a list to store the model objects
             List<LMC_InventoryData_Model> lInvDataExp = new List<LMC_InventoryData_Model>();
+            // Declare an instance of the model for holding inventory data no exported
             LMC_InventoryData_Model oInvDataExp;
+            // Declare a SqlDataReader to read the results from the SQL query execution
             SqlDataReader rdr;
 
             try
@@ -88,6 +91,10 @@ namespace LMC_Other_InventoryData
                 Log.Error("Get_InventoryData_Exported", "Error", ex.Message, ex.StackTrace);
 
                 return null; // Return null in case of an exception
+            }
+            finally
+            {
+                _conn.Close(); // Ensure connection is closed, even if an exception occurs.
             }
         }
     }

@@ -16,7 +16,6 @@ namespace LMC_Other_InventoryData
             _conn = conn;
         }
 
-
         /// <summary>
         /// Get_Inventory_Record_Detail
         ///     -Gets the inventory record detail from the InventoryData table based on @SerialNumber and @ScaleID values.
@@ -26,8 +25,11 @@ namespace LMC_Other_InventoryData
         /// <returns>list of inventory records detail</returns>
         public List<LMC_InvData_RecordDetail_Model> Get_Inventory_Record_Detail(string serialNumber, string scaleID)
         {
+            // Create a list to store the model objects 
             List<LMC_InvData_RecordDetail_Model> lInvdataRecordsDetail = new();
+            // Declare an instance of the model for holding inventory record detail
             LMC_InvData_RecordDetail_Model oInvdataRecordDetail;
+            // Declare a SqlDataReader to read the results from the SQL query execution
             SqlDataReader rdr;
 
             try
@@ -102,6 +104,10 @@ namespace LMC_Other_InventoryData
                 Log.Error("Get_Inventory_Record_Detail", "Error", ex.Message, ex.StackTrace);
 
                 return null; // Return null in case of an exception
+            }
+            finally
+            {
+                _conn.Close(); // Ensure connection is closed, even if an exception occurs.
             }
         }
     }

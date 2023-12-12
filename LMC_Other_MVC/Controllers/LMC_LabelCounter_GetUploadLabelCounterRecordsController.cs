@@ -34,7 +34,7 @@ namespace LMC_Other_MVC.Controllers
                 List<LMC_LabelCounter_GetUploadLabelCounterRecords_Model> lLabelCounterRecords = _repo.GetUploadLabelCounterRecords_Repos(startDate, endDate);
 
                 // Creating a view model instance to pass data to the view
-                LMC_LabelCounter_GetUploadLabelCounterRecords_VM oLabelCounterRecordVM = new();
+                LMC_LabelCounter_GetUploadLabelCounterRecords_VM oLabelCounterRecordVM = new LMC_LabelCounter_GetUploadLabelCounterRecords_VM();
 
                 // Assigning values to the view model properties
                 oLabelCounterRecordVM.StartDate = startDate.Value;
@@ -49,7 +49,8 @@ namespace LMC_Other_MVC.Controllers
                 //Log error message to text file
                 Log.Error("Error", ex.Message, ex.StackTrace);
 
-                return null; // Return null in case of an exception
+                // Returning null in case of an exception
+                return null; 
             }
 
         }

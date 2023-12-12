@@ -19,14 +19,17 @@ namespace LMC_Other_InventoryData
 
         /// <summary>
         /// GetUploadInventoryRecords
-        ///     -Gets the inventory records for upload to the webservice
+        ///     -Gets the inventory records for upload to the webservice.
         /// </summary>
-        /// <returns>list of Inventory Records Updated</returns>
+        /// <returns>List of Inventory Records Updated</returns>
         public List<LMC_GetUpload_InventoryRecords_Model> GetUploadInventoryRecords()
         {
-            List<LMC_GetUpload_InventoryRecords_Model> lInvDataRecords = new(); // Initializing a new List
-            LMC_GetUpload_InventoryRecords_Model oInvDataRecord; // Declaring a variable
-            SqlDataReader rdr; // Declaring a variable
+            // Create a list to store the model objects 
+            List<LMC_GetUpload_InventoryRecords_Model> lInvDataRecords = new();
+            // Declare an instance of the model for holding inventory records for upload to the webservice
+            LMC_GetUpload_InventoryRecords_Model oInvDataRecord;
+            // Declare a SqlDataReader to read the results from the SQL query execution
+            SqlDataReader rdr;
 
             try
             {
@@ -89,7 +92,13 @@ namespace LMC_Other_InventoryData
                 //Log error message to text file
                 Log.Error("GetUploadInventoryRecords", "Error", ex.Message, ex.StackTrace);
 
-                return null; // Return null in case of an exception
+                // Return null in case of an exception
+                return null;
+            }
+            finally
+            {
+                // Ensure connection is closed, even if an exception occurs.
+                _conn.Close();
             }
         }
     }

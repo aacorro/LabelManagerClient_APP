@@ -47,7 +47,8 @@ namespace LMC_Other_MVC.Controllers
                 //Log error message to text file
                 Log.Error("Error", ex.Message, ex.StackTrace);
 
-                return null; // Return null in case of an exception
+                // Returning null in case of an exception
+                return null; 
             }
         }
     }
