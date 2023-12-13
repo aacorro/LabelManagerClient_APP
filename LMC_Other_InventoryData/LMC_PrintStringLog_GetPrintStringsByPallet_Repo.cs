@@ -85,7 +85,7 @@ namespace LMC_Other_InventoryData
             catch (Exception ex)
             {
                 //Log error message to text file
-                Log.Error("GetUploadLabelCounterRecords_Repos", "Error", ex.Message, ex.StackTrace);
+                Log.Error("GetPrintStringsByPallet", "Error", ex.Message, ex.StackTrace);
 
                 return null; // Return null in case of an exception
             }

@@ -62,8 +62,22 @@ namespace LMC_Other_InventoryData
                         oLastLabelDate = new LMC_PalletExact_GetPalletExactSummaryLastLabelDate_Model();
 
                         // Setting the LastLabelDate property of the model with the value from the output parameter
-                        oLastLabelDate.LastLabelDate = (DateTime)lastLabelDateParameter.Value;
-
+                        if (lastLabelDateParameter.Value != DBNull.Value)
+                        {
+                            oLastLabelDate.LastLabelDate = (DateTime)lastLabelDateParameter.Value;
+                        }
+                        else
+                        {
+                            // Log a message to help identify why the value is null
+                            Log.Information("LastLabelDate is null or DBNull.Value");
+                            return null; // Return null if LastLabelDate is not available
+                        }
+                    }
+                    else
+                    {
+                        // Log the case where no records are found
+                        Log.Information("No records found for the specified criteria");
+                        return null; // Return null if no records are found
                     }
                 }
                 //Cleanup the sql reader
@@ -75,7 +89,7 @@ namespace LMC_Other_InventoryData
             catch (Exception ex)
             {
                 //Log error message to text file using Serilog
-                Log.Error("GetUploadLabelCounterRecords_Repos", "Error", ex.Message, ex.StackTrace);
+                Log.Error("GetPalletExactSummaryLastLabelDate", "Error", ex.Message, ex.StackTrace);
 
                 return null; // Return null in case of an exception
             }

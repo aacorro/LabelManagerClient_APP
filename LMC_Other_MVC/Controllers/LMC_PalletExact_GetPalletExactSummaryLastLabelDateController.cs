@@ -18,15 +18,32 @@ namespace LMC_Other_MVC.Controllers
         }
 
         [HttpGet] // HTTP GET action method for handling requests to the Index page
-        public async Task<IActionResult> Index(string productNumber, DateTime runStartDate, DateTime runEndDate)
+        public async Task<IActionResult> Index(string productNumber, DateTime? runStartDate, DateTime? runEndDate)
         {
             try
             {
-                // Calling the repository method to get pallet exact summary with the last label date
-                LMC_PalletExact_GetPalletExactSummaryLastLabelDate_Model result = await _repo.GetPalletExactSummaryLastLabelDate(productNumber, runStartDate, runEndDate);
+                // Use null-coalescing operator to set default values if not provided
+                runStartDate ??= DateTime.Now;
+                runEndDate ??= DateTime.Now;
 
-                // Returning the view along with the result
-                return View(result);
+                // Calling the repository method to get pallet exact summary with the last label date
+                LMC_PalletExact_GetPalletExactSummaryLastLabelDate_Model result = await _repo.GetPalletExactSummaryLastLabelDate(productNumber, (DateTime)runStartDate, (DateTime)runEndDate);
+
+                // Check if the result is null or if the LastLabelDate is DateTime.MinValue
+                if (result != null && result.LastLabelDate != DateTime.MinValue)
+                {
+                    // Returning the view along with the result
+                    return View(result);
+                }
+                else
+                {
+                    // Log the case where no data is available
+                    Log.Information("No data available for the selected data range");
+
+                    // Return a view for the case where no data is available
+                    return View("NoDataView"); 
+                }
+
             }
             catch (Exception ex)
             {

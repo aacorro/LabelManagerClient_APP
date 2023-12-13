@@ -11,22 +11,22 @@
     <form asp-controller="LMC_PalletExact_GetPalletExactSummaryLastLabelDate" asp-action="Index" method="get">
         <div class="row">
             <div class="col-md-4">
-                <label for="productNumber">Product Number:</label>
-                <input type="text" id="productNumber" name="productNumber" required />
+                <label asp-for="ProductNumber" class="form-label fst-italic">Product Number:</label>
+                <input asp-for="ProductNumber" type="text" class="form-control" required />
             </div>
             <div class="col-md-4">
-                <label for="runStartDate">Run Start Date:</label>
-                <input type="date" id="runStartDate" name="runStartDate" required />
+                <label asp-for="RunStartDate" class="form-label fst-italic">Start Date:</label>
+                <input asp-for="RunStartDate" type="date" class="form-control" value="@Model?.RunStartDate.ToString("yyyy-MM-dd") ?? string.Empty)" required />
             </div>
 
             <div class="col-md-4">
-                <label for="runEndDate">Run End Date:</label>
-                <input type="date" id="runEndDate" name="runEndDate" required />
+                <label asp-for="RunEndDate" class="form-label fst-italic">End Date:</label>
+                <input asp-for="RunEndDate" type="date" class="form-control" value="@Model?.RunEndDate.ToString("yyyy-MM-dd") ?? string.Empty)" required />
             </div>
         </div>
 
         <div>
-            <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            <button type="submit" class="btn btn-primary mt-2">Apply data rage</button>
         </div>
     </form>
 

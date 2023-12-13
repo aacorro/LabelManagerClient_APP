@@ -73,7 +73,7 @@ namespace LMC_Other_InventoryData
             catch (Exception ex)
             {
                 //Log error message to text file
-                Log.Error("Error", ex.Message, ex.StackTrace);
+                Log.Error("UploadRecords", "Error", ex.Message, ex.StackTrace);
 
                 // Setting a default value for the error status in case of an exception
                 oUpdateSyncTimeUploadRecords.Status = -1; // Default value for error Status
